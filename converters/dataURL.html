@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>DataURL</title>
+  </head>
+  <body>
+    Image to DataURL
+    <input id="image-input" type="file" accept="image/*" />
+    <br />
+    <img
+      height="100px"
+      width="100px"
+      id="image-preview"
+      src="#"
+      alt="preview of selected image"
+    />
+    <br />
+    DataURL:<input id="dataURL-output" value="" />
+    <br />
+    <br />
+    DataURL to image:
+    <input id="dataURL-input" type="text" />
+    <br />
+    <img
+      height="100px"
+      width="100px"
+      id="image-output"
+      src="#"
+      alt="preview of dataURL"
+    />
+    <br />
+    <br />
+    <div>
+      <b>How to use</b>
+      <ul>
+        <li>
+          DataURL to image: Paste the data URL in the text input and press enter
+          to convert to image
+        </li>
+        <li>Image to DataURL: Select the file to get it's DataURL</li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    // img-to-data-url
+    const imageInputElement = document.getElementById('image-input')
+    const imagePreviewElement = document.getElementById('image-preview')
+    const dataURLOutputElement = document.getElementById('dataURL-output')
+    const reader = new FileReader()
+    reader.addEventListener(
+      'load',
+      () => {
+        imagePreviewElement.src = reader.result
+        dataURLOutputElement.value = reader.result
+      },
+      false
+    )
+    imageInputElement.addEventListener('change', (e) => {
+      const file = e.target.files[0]
+      if (file) {
+        reader.readAsDataURL(file)
+      }
+    })
+    // data-url-to-img
+    const dataURLInputElement = document.getElementById('dataURL-input')
+    const imageOutputElement = document.getElementById('image-output')
+    dataURLInputElement.addEventListener('change', (e) => {
+      imageOutputElement.src = e.target.value
+    })
+  </script>
+</html>
